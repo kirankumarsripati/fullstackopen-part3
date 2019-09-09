@@ -1,0 +1,19 @@
+{
+  "name": "phonebook-backend",
+  "version": "1.0.0",
+  "description": "This is a excercise files for the part 3 of fullstackopen",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krnsripati/fullstackopen-part3.git"
+  },
+  "author": "Kirankumar Sripati",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krnsripati/fullstackopen-part3/issues"
+  },
+  "homepage": "https://github.com/krnsripati/fullstackopen-part3#readme"
+}
