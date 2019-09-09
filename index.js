@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
 
 let persons =  [
   {
@@ -34,6 +37,21 @@ app.get('/api/persons/:id', (request, response) => {
   response.json(person)
 })
 
+app.post('/api/persons', (request, response) => {
+  // const maxId = persons.length > 0
+  //   ? Math.max(...persons.map(p => p.id))
+  //   : 0
+
+  const maxId = Math.floor(Math.random() * 1000)
+
+  const person = request.body
+  person.id = maxId + 1
+
+  persons = persons.concat(person)
+
+  response.json(person)
+})
+
 app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   persons = persons.filter(person => person.id !== id)
@@ -41,7 +59,7 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.get('/info', (request, response) => {
-  let info = `<p>Phonebook has info for ${persons.length} people`;
+  let info = `<p>Phonebook has info for ${persons.length} people`
   info += `<br>${new Date()}</p>`
   response.send(info)
 })
