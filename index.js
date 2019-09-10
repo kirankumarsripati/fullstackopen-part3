@@ -42,10 +42,26 @@ app.post('/api/persons', (request, response) => {
   //   ? Math.max(...persons.map(p => p.id))
   //   : 0
 
-  const maxId = Math.floor(Math.random() * 1000)
-
   const person = request.body
-  person.id = maxId + 1
+  if (!person.name || person.name.trim() === '') {
+    return response.status(400).json({
+      error: 'name missing'
+    })
+  }
+
+  if (!person.number) {
+    return response.status(400).json({
+      error: 'number missing'
+    })
+  }
+
+  if (persons.find(p => p.name.toLowerCase() === person.name.toLowerCase())) {
+    return response.status(400).json({
+      error: 'name must be unique'
+    })
+  }
+
+  person.id = Math.floor(Math.random() * 1000)
 
   persons = persons.concat(person)
 
