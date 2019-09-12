@@ -33,6 +33,8 @@ let persons =  [
   }
 ]
 
+app.use(express.static('build'))
+
 app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
@@ -86,6 +88,6 @@ app.get('/info', (request, response) => {
   response.send(info)
 })
 
-const port = 3001
-app.listen(port)
-console.log(`Server running on port ${port}`)
+const PORT = process.env.PORT || 3001
+app.listen(PORT)
+console.log(`Server running on port ${PORT}`)
