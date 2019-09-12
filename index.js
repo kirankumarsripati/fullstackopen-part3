@@ -61,6 +61,17 @@ app.delete('/api/persons/:id', (request, response, next) => {
   .catch(error => next(error))
 })
 
+app.put('/api/persons/:id', (request, response, next) => {
+  const { name, number } = request.body
+  const person = { name, number }
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then(returnedObject => {
+      response.json(returnedObject.toJSON())
+    })
+    .catch(error => next(error))
+})
+
 app.get('/info', (request, response, next) => {
   Person.find({}).count().then(count => {
     let info = `<p>Phonebook has info for ${count} people`
