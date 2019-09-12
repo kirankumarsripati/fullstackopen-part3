@@ -48,34 +48,26 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-  // const maxId = persons.length > 0
-  //   ? Math.max(...persons.map(p => p.id))
-  //   : 0
+  const name = request.body.name ? request.body.name.trim() : ''
+  const number = request.body.number ? request.body.number.trim() : ''
 
-  const person = request.body
-  if (!person.name || person.name.trim() === '') {
+  if (name === '') {
     return response.status(400).json({
       error: 'name missing'
     })
   }
 
-  if (!person.number) {
+  if (number === '') {
     return response.status(400).json({
       error: 'number missing'
     })
   }
 
-  if (persons.find(p => p.name.toLowerCase() === person.name.toLowerCase())) {
-    return response.status(400).json({
-      error: 'name must be unique'
-    })
-  }
+  const person = new Person({ name, number })
 
-  person.id = Math.floor(Math.random() * 1000)
-
-  persons = persons.concat(person)
-
-  response.json(person)
+  person.save().then(returnedObject => {
+    response.json(returnedObject.toJSON())
+  })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
