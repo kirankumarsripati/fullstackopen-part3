@@ -6,10 +6,10 @@ const url = process.env.MONGODB_URI
 console.log('connecting to', url)
 
 mongoose.connect(url, { useNewUrlParser: true })
-  .then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('error connecting to MongoDB:', error.message)
   })
 
@@ -18,21 +18,22 @@ const personSchema = new mongoose.Schema({
     type: String,
     unique: true,
     minlength: 3,
-    require: true
+    require: true,
   },
   number: {
     type: String,
     minlength: 8,
-    required: true
+    required: true,
   },
 })
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
+    const object = returnedObject
+    object.id = object._id.toString()
+    delete object._id
+    delete object.__v
+  },
 })
 personSchema.plugin(uniqueValidator)
 

@@ -20,29 +20,29 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema)
 
-if ( args.length === 3 ) {
+if (args.length === 3) {
   // only password provided
-  Person.find({}).then(result => {
+  Person.find({}).then((result) => {
     console.log('phonebook:')
-    result.forEach(person => {
+    result.forEach((person) => {
       console.log(`${person.name} ${person.number}`)
     })
     mongoose.connection.close()
   })
 }
 
-if ( args.length === 4 ) {
+if (args.length === 4) {
   console.log('required both name and number')
   process.exit(1)
 }
 
-if ( args.length === 5 ) {
+if (args.length === 5) {
   const person = new Person({
     name: args[3],
     number: args[4],
   })
 
-  person.save().then(response => {
+  person.save().then((response) => {
     console.log(`added ${response.name} ${response.number} to phonebook`)
     mongoose.connection.close()
   })
